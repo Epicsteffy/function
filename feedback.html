@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motivation - Mai Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="feedback-page">
+    <h1>(❁´◡`❁)</h1>
+    <p id="helper-text" style="font-size: 0.7em; opacity: 0.4; font-family: 'Arial', sans-serif; margin-top: 8px; font-weight: bold;">
+      There's 90 submissions per month   <br>  so don't spam :P
+    <p>‎ </p>
+    <form name="feedback" id="feedback-form" method="POST" data-netlify="true" action="thankyou.html">
+      <input type="hidden" name="form-name" value="feedback">
+      <p class="hidden">
+        <label>booo <input name="bot-field"></label>
+      </p>
+     <div class="textarea-wrapper">
+  <textarea name="message" placeholder="Leave a message for me here :]" rows="7" required></textarea>
+  <img src="cat.png" alt="cute cat" class="corner-cat">
+</div>
+      <button type="submit" class="send-button" id="send-button">Send</button>
+      <p id="note" style="display: none; margin-top: 10px; color: green;">sent!</p>
+      <input type="hidden" name="user_ip" id="user-ip">
+      <input type="hidden" name="user_agent" id="user-agent">
+      <input type="hidden" name="referrer" id="referrer">
+      <input type="hidden" name="page_url" id="page-url">
+    </form>
+    <a href="index.html" class="back-button">Back to Calculator</a> 
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

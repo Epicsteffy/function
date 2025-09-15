@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  //
+  // === NEW TRACKING CODE ===
   const trackingEndpoint = '/.netlify/functions/track';
 
   const collectAndSendTrackingData = () => {

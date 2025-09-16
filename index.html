@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Stop going through my code buddy -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mai Calculator</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="/manifest.json">
+  
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDt4sNQ0rnYYYrdzejqkWvJjGBDRXDEMF0",
+      authDomain: "mai-calculator.firebaseapp.com",
+      projectId: "mai-calculator",
+      storageBucket: "mai-calculator.firebasestorage.app",
+      messagingSenderId: "796749112198",
+      appId: "1:796749112198:web:34cc67a4b7a7dc358f0207",
+      measurementId: "G-93QEZHQ27N"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+  </script>
+
 </head>
 <body>
   <div class="calculator-container">
@@ -18,26 +41,31 @@
       <button class="btn number" data-value="8">8</button>
       <button class="btn number" data-value="9">9</button>
       <button class="btn operator" data-value="/">÷</button>
-
       <button class="btn number" data-value="4">4</button>
       <button class="btn number" data-value="5">5</button>
       <button class="btn number" data-value="6">6</button>
       <button class="btn operator" data-value="*">×</button>
-
       <button class="btn number" data-value="1">1</button>
       <button class="btn number" data-value="2">2</button>
       <button class="btn number" data-value="3">3</button>
       <button class="btn operator" data-value="-">−</button>
-
       <button class="btn number" data-value="0">0</button>
       <button class="btn number" data-value=".">.</button>
       <button class="btn clear" data-value="C">C</button>
       <button class="btn operator" data-value="+">+</button>
-
       <button class="btn equals" data-value="=">=</button>
     </div>
   </div>
-  <a href="feedback.html" class="feedback-button">Message Meow</a>
+  <div class="bottom-buttons">
+    <button id="history-button" class="feedback-button">History</button>
+  </div>
+
+  <div id="history-popup" class="history-container">
+      <button id="close-history" class="close-button">&times;</button>
+      <h3>History</h3>
+      <ul id="history"></ul>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

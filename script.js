@@ -133,10 +133,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // --- NEW: Cute button logic ---
   if (cuteButton) {
       cuteButton.addEventListener('click', () => {
-        fetch('https://api.quotable.io/random?tags=love|motivational|inspirational')
+        fetch('/api/quotes/random?tags=love|motivational|inspirational') // <-- Changed this line
           .then(response => response.json())
           .then(data => {
             display.textContent = `"${data.content}" - ${data.author}`;
@@ -151,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
 
-  // --- Tracking code ---
   const trackingEndpoint = '/.netlify/functions/track';
   
   const collectAndSendTrackingData = () => {

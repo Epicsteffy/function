@@ -5,31 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mai Calculator</title>
   <link rel="stylesheet" href="styles.css">
-  
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyDt4sNQ0rnYYYrdzejqkWvJjGBDRXDEMF0",
-      authDomain: "mai-calculator.firebaseapp.com",
-      projectId: "mai-calculator",
-      storageBucket: "mai-calculator.firebasestorage.app",
-      messagingSenderId: "796749112198",
-      appId: "1:796749112198:web:34cc67a4b7a7dc358f0207",
-      measurementId: "G-93QEZHQ27N"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore(app);
-  </script>
-
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body>
   <div class="calculator-container">
@@ -60,13 +36,11 @@
     <a href="feedback.html" class="feedback-button">Message Meow</a>
     <button id="history-button" class="feedback-button">History</button>
   </div>
-
   <div id="history-popup" class="history-container">
       <button id="close-history" class="close-button">&times;</button>
       <h3>History</h3>
       <ul id="history"></ul>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

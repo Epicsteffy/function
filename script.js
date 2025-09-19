@@ -10,11 +10,12 @@ document.addEventListener("DOMContentLoaded", function() {
   let calculationString = '';
   let ratImage = document.querySelector('.floating-image');
 
+
   if (ratImage) {
     ratImage.style.display = 'none';
   }
 
-  // --- NEW: Function to handle button clicks based on value ---
+  // --- Function to handle button clicks based on value ---
   function handleInput(value) {
     if (value === 'C') {
       currentInput = '';
@@ -32,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (calculationString === '10+12+2022') {
             result = 'The night we met 🎶';
           } else if (calculationString === '6+9') {
-            result = '15 😏...';
+            result = '15 😏';
             if (ratImage) {
               ratImage.style.display = 'block';
             }
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
           }
           
-          if (typeof result === 'number' || typeof result === 'string') {
+          if (historyList && (typeof result === 'number' || typeof result === 'string')) {
             let historyItem = document.createElement('li');
             historyItem.textContent = `${calculationString} = ${result}`;
             historyList.appendChild(historyItem);
@@ -87,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  // --- NEW: Keyboard support ---
+  // --- Keyboard support ---
   document.addEventListener('keydown', (e) => {
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(e.key)) {
       handleInput(e.key);
@@ -107,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // --- NEW: History pop-up functionality ---
+  // --- History pop-up functionality ---
   if (historyButton && historyPopup && closeHistoryButton) {
     historyButton.addEventListener('click', () => {
       historyPopup.style.display = 'block';
@@ -117,8 +118,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-
-  // === NEW TRACKING CODE ===
+  // === Tracking code ===
+  // Note: This tracking code is for your Netlify Serverless function.
+  // We will update this later to use Firebase.
   const trackingEndpoint = '/.netlify/functions/track';
 
   const collectAndSendTrackingData = () => {
@@ -133,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function() {
     try {
       if (navigator.sendBeacon) {
         navigator.sendBeacon(trackingEndpoint, JSON.stringify(trackingData));
-        console.log('Tracking data sent via sendBeacon:', trackingData);
       } else {
         fetch(trackingEndpoint, {
           method: 'POST',
@@ -141,10 +142,6 @@ document.addEventListener("DOMContentLoaded", function() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(trackingData),
-        }).then(() => {
-          console.log('Tracking data sent via fetch:', trackingData);
-        }).catch(err => {
-          console.error('Failed to send tracking data:', err);
         });
       }
     } catch (error) {
@@ -153,5 +150,4 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 
   collectAndSendTrackingData();
-
 });

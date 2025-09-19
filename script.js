@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (calculationString === '10+12+2022') {
             result = 'The night we met 🎶';
           } else if (calculationString === '6+9') {
-            result = '15 😏';
+            result = '15 😏...';
             if (ratImage) {
               ratImage.style.display = 'block';
             }

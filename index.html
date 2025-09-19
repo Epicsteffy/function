@@ -10,7 +10,7 @@
 <body>
   <div class="calculator-container">
     <img src="rat.png" alt="Cute Rat" class="floating-image">
-    <h1>Mai Calculator</h1>
+    <h1 id="title">Mai Calculator</h1>
     <div class="display" id="display">0</div>
     <div class="buttons">
       <button class="btn number" data-value="7">7</button>
@@ -33,8 +33,11 @@
     </div>
   </div>
   <div class="bottom-buttons">
-    <a href="feedback.html" class="feedback-button">Message Meow</a>
+    <a href="feedback.html" class="feedback-button small-button">Message Meow</a>
     <button id="history-button" class="feedback-button">History</button>
+    <button id="cute-button" class="feedback-button cute-button">
+        <img src="cute.png" alt="Cute Toy" class="cute-image">
+    </button>
   </div>
   <div id="history-popup" class="history-container">
       <button id="close-history" class="close-button">&times;</button>

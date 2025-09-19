@@ -6,16 +6,19 @@ document.addEventListener("DOMContentLoaded", function() {
   let historyButton = document.getElementById('history-button');
   let historyPopup = document.getElementById('history-popup');
   let closeHistoryButton = document.getElementById('close-history');
+  let title = document.getElementById('title');
+  let cuteButton = document.getElementById('cute-button');
   let currentInput = '';
   let calculationString = '';
   let ratImage = document.querySelector('.floating-image');
-
+  
+  let clickCount = 0;
+  let isDarkTheme = false;
 
   if (ratImage) {
     ratImage.style.display = 'none';
   }
 
-  // --- Function to handle button clicks based on value ---
   function handleInput(value) {
     if (value === 'C') {
       currentInput = '';
@@ -81,14 +84,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Calculator button functionality
   buttons.forEach(button => {
     button.addEventListener('click', () => {
       handleInput(button.getAttribute('data-value'));
     });
   });
 
-  // --- Keyboard support ---
   document.addEventListener('keydown', (e) => {
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(e.key)) {
       handleInput(e.key);
@@ -108,7 +109,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
 
-  // --- History pop-up functionality ---
   if (historyButton && historyPopup && closeHistoryButton) {
     historyButton.addEventListener('click', () => {
       historyPopup.style.display = 'block';
@@ -118,11 +118,42 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // === Tracking code ===
-  // Note: This tracking code is for your Netlify Serverless function.
-  // We will update this later to use Firebase.
-  const trackingEndpoint = '/.netlify/functions/track';
+  if (title) {
+    title.addEventListener('click', () => {
+      clickCount++;
+      if (clickCount === 3) {
+        isDarkTheme = !isDarkTheme;
+        if (isDarkTheme) {
+          document.body.classList.add('dark-theme');
+        } else {
+          document.body.classList.remove('dark-theme');
+        }
+        clickCount = 0;
+      }
+    });
+  }
 
+  // --- NEW: Cute button logic ---
+  if (cuteButton) {
+      cuteButton.addEventListener('click', () => {
+        fetch('https://api.quotable.io/random?tags=love|motivational|inspirational')
+          .then(response => response.json())
+          .then(data => {
+            display.textContent = `"${data.content}" - ${data.author}`;
+            currentInput = '';
+            calculationString = '';
+          })
+          .catch(error => {
+            display.textContent = 'Could not fetch a quote.';
+            console.error('Error fetching quote:', error);
+          });
+      });
+  }
+
+
+  // --- Tracking code ---
+  const trackingEndpoint = '/.netlify/functions/track';
+  
   const collectAndSendTrackingData = () => {
     const trackingData = {
       userAgent: navigator.userAgent,

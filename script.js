@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (cuteButton) {
       cuteButton.addEventListener('click', () => {
-        fetch('/api/quotes/random?tags=love|motivational|inspirational') // <-- Changed this line
+        fetch('/api/quotes/random?tags=love|motivational|inspirational')
           .then(response => response.json())
           .then(data => {
             display.textContent = `"${data.content}" - ${data.author}`;

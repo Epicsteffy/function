@@ -344,8 +344,7 @@ h1 {
   gap: 10px;
 }
 
-.feedback-button.small-button,
-#history-button {
+.feedback-button.small-button {
     flex: 1;
 }
 
@@ -411,6 +410,11 @@ body.dark-theme #history-popup {
   border-bottom: 1px solid #d4c1ec;
   padding: 5px 0;
   transition: color 0.5s ease, border-bottom 0.5s ease;
+}
+
+body.dark-theme .history-container li {
+    color: #ecf0f1;
+    border-bottom: 1px solid #465b70;
 }
 
 .history-container li:last-child {

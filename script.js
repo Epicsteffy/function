@@ -136,9 +136,17 @@ document.addEventListener("DOMContentLoaded", function() {
   if (cuteButton) {
       cuteButton.addEventListener('click', () => {
         fetch('/api/quotes/random?tags=love|motivational|inspirational')
-          .then(response => response.json())
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
           .then(data => {
-            display.textContent = `"${data.content}" - ${data.author}`;
+            // The Zen Quotes API returns an array, so we need to access the first item.
+            const quote = data[0].q;
+            const author = data[0].a;
+            display.textContent = `"${quote}" - ${author}`;
             currentInput = '';
             calculationString = '';
           })

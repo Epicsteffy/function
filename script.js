@@ -152,8 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
           .then(data => {
             // The Zen Quotes API returns an array, so we access the first item.
             const quote = data[0].q;
-            const author = data[0].a;
-            quoteContent.textContent = `"${quote}" - ${author}`;
+            quoteContent.textContent = `"${quote}"`;
           })
           .catch(error => {
             quoteContent.textContent = 'Could not fetch a quote.';
@@ -165,7 +164,6 @@ document.addEventListener("DOMContentLoaded", function() {
         quotePopup.style.display = 'none';
       });
   }
-
 
   const trackingEndpoint = '/.netlify/functions/track';
   

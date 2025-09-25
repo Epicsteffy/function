@@ -343,7 +343,9 @@ h1 {
   gap: 10px;
 }
 
-.feedback-button.small-button {
+.feedback-button,
+#history-button,
+#quote-button {
     flex: 1;
 }
 
@@ -433,4 +435,12 @@ body.dark-theme .history-container li {
     color: #6b5b95;
     font-weight: bold;
     transition: color 0.5s ease;
+}
+
+/* --- New Font for Quotes --- */
+.quote-font {
+    font-family: 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 1.2em;
+    text-align: center;
 }

@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
             calculationString = '';
           })
           .catch(error => {
-            display.textContent = 'i will code this tomorrow....';
+            display.textContent = 'Could not fetch a quote.';
             console.error('Error fetching quote:', error);
           });
       });

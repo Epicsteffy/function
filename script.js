@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", function() {
   let closeHistoryButton = document.getElementById('close-history');
   let title = document.getElementById('title');
   let cuteButton = document.getElementById('cute-button');
+  let quotePopup = document.getElementById('quote-popup');
+  let quoteContent = document.getElementById('quote-content');
+  let closeQuoteButton = document.getElementById('close-quote');
   let currentInput = '';
   let calculationString = '';
   let ratImage = document.querySelector('.floating-image');
@@ -133,9 +136,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  if (cuteButton) {
+  if (cuteButton && quotePopup && closeQuoteButton) {
       cuteButton.addEventListener('click', () => {
-        fetch('/api/quotes/random?tags=love|motivational|inspirational')
+        // Show a loading message while fetching
+        quoteContent.textContent = 'Fetching quote...';
+        quotePopup.style.display = 'block';
+
+        fetch('/api/quotes/random')
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -143,17 +150,19 @@ document.addEventListener("DOMContentLoaded", function() {
             return response.json();
           })
           .then(data => {
-            // The Zen Quotes API returns an array, so we need to access the first item.
+            // The Zen Quotes API returns an array, so we access the first item.
             const quote = data[0].q;
             const author = data[0].a;
-            display.textContent = `"${quote}" - ${author}`;
-            currentInput = '';
-            calculationString = '';
+            quoteContent.textContent = `"${quote}" - ${author}`;
           })
           .catch(error => {
-            display.textContent = 'Could not fetch a quote.';
+            quoteContent.textContent = 'Could not fetch a quote.';
             console.error('Error fetching quote:', error);
           });
+      });
+
+      closeQuoteButton.addEventListener('click', () => {
+        quotePopup.style.display = 'none';
       });
   }
 

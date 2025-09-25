@@ -21,7 +21,8 @@ body.dark-theme {
 }
 
 body.dark-theme .calculator-container,
-body.dark-theme #history-popup {
+body.dark-theme #history-popup,
+body.dark-theme #quote-popup {
   background: #2c3e50;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
@@ -305,8 +306,6 @@ h1 {
   }
 } 
 
-/*nigaaa  */
-
 .textarea-wrapper {
   position: relative;
   display: inline-block;
@@ -370,7 +369,8 @@ h1 {
     object-fit: contain;
 }
 
-#history-popup {
+#history-popup,
+#quote-popup {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -385,7 +385,8 @@ h1 {
     transition: background 0.5s ease;
 }
 
-body.dark-theme #history-popup {
+body.dark-theme #history-popup,
+body.dark-theme #quote-popup {
     background: #2c3e50;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }

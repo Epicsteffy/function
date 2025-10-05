@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function handleInput(value) {
-    // Clear the audio player if anything else is typed
+    // Clear typed
     if (audioPlayer) {
       audioPlayer.pause();
       audioPlayer.currentTime = 0;
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
           if (calculationString === '10+12+2022') {
             
-            // --- NEW: Create a clickable element for the song ---
+          
             let clickableSpan = document.createElement('span');
             clickableSpan.textContent = 'The night we met 🎶';
             clickableSpan.style.cursor = 'pointer';
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
               if (audioPlayer) {
                 audioPlayer.play();
                 // Reset the display to indicate song is playing
-                display.textContent = '🎶 Playing...';
+                display.textContent = '🎶:)';
               }
             };
             
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // --- Quote pop-up functionality ---
+  // quote pop-up
   const fetchAndCacheQuotes = () => {
     fetch('/api/quotes/quotes')
       .then(response => {

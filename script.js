@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (historyButton && historyPopup && closeHistoryButton) {
     historyButton.addEventListener('click', () => {
+      quotePopup.style.display = 'none'; // Hide quote popup if it's open
       historyPopup.style.display = 'block';
     });
     closeHistoryButton.addEventListener('click', () => {
@@ -138,24 +139,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (cuteButton && quotePopup && closeQuoteButton) {
       cuteButton.addEventListener('click', () => {
-        // Show a loading message while fetching
+        historyPopup.style.display = 'none'; // Hide history popup if it's open
         quoteContent.textContent = 'Fetching quote...';
         quotePopup.style.display = 'block';
 
-        fetch('/api/quotes/random')
+        // NOTE: Zen Quotes API is restricted to 5 requests per 30 seconds.
+        // We are using the 'quotes' mode to fetch a random quote.
+        fetch('/api/quotes/quotes')
           .then(response => {
             if (!response.ok) {
-              throw new Error('Network response was not ok');
+              throw new Error('Network response was not ok: ' + response.status);
             }
             return response.json();
           })
           .then(data => {
-            // The Zen Quotes API returns an array, so we access the first item.
+            // Zen Quotes API returns an array of quotes, even for a single random one.
             const quote = data[0].q;
-            quoteContent.textContent = `"${quote}"`;
+            quoteContent.textContent = `“${quote}”`;
           })
           .catch(error => {
-            quoteContent.textContent = 'Could not fetch a quote.';
+            quoteContent.textContent = 'Quote failed. Please wait 30 seconds and try again.';
             console.error('Error fetching quote:', error);
           });
       });
@@ -164,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
         quotePopup.style.display = 'none';
       });
   }
+
 
   const trackingEndpoint = '/.netlify/functions/track';
   

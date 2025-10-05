@@ -75,13 +75,15 @@ body.dark-theme .btn.equals:hover {
 }
 
 body.dark-theme .feedback-button,
-body.dark-theme #history-button {
+body.dark-theme #history-button,
+body.dark-theme .cute-button {
   background: #2980b9;
   color: #ecf0f1;
 }
 
 body.dark-theme .feedback-button:hover,
-body.dark-theme #history-button:hover {
+body.dark-theme #history-button:hover,
+body.dark-theme .cute-button:hover {
   background: #2374a5;
 }
 
@@ -253,7 +255,6 @@ h1 {
   text-decoration: none;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 100%;
   transition: background 0.3s ease, color 0.5s ease;
 }
 
@@ -343,14 +344,15 @@ h1 {
   gap: 10px;
 }
 
+/* Fix: All three buttons now take equal space */
 .feedback-button,
-#history-button,
-#quote-button {
+#history-button {
     flex: 1;
 }
 
 .cute-button {
-    width: 60px;
+    flex: 1; /* Fix: Force the cute button to take equal space */
+    width: auto; /* Override fixed width */
     height: 44px;
     padding: 2px;
     background: #ffccbc;
@@ -437,10 +439,12 @@ body.dark-theme .history-container li {
     transition: color 0.5s ease;
 }
 
-/* --- New Font for Quotes --- */
-.quote-font {
+/* Fix: New Font for Quotes */
+#quote-content {
     font-family: 'Times New Roman', serif;
     font-style: italic;
     font-size: 1.2em;
     text-align: center;
+    margin-top: 10px;
+    color: #6b5b95;
 }

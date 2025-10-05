@@ -345,14 +345,15 @@ h1 {
 }
 
 /* Fix: All three buttons now take equal space */
-.feedback-button,
+.feedback-button.meow-button,
 #history-button {
     flex: 1;
+    padding: 12px;
 }
 
 .cute-button {
-    flex: 1; /* Fix: Force the cute button to take equal space */
-    width: auto; /* Override fixed width */
+    flex: 1;
+    width: auto;
     height: 44px;
     padding: 2px;
     background: #ffccbc;

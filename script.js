@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function handleInput(value) {
-    // Clear typed
+    // Stop audio on key press
     if (audioPlayer) {
       audioPlayer.pause();
       audioPlayer.currentTime = 0;
@@ -47,18 +47,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
           if (calculationString === '10+12+2022') {
             
-          
+            // --- Song Easter Egg Logic ---
             let clickableSpan = document.createElement('span');
             clickableSpan.textContent = 'The night we met 🎶';
             clickableSpan.style.cursor = 'pointer';
             clickableSpan.style.textDecoration = 'underline';
-            clickableSpan.style.color = isDarkTheme ? '#ecf0f1' : '#6b5b95'; // Match current theme
+            clickableSpan.style.color = isDarkTheme ? '#ecf0f1' : '#6b5b95';
 
             clickableSpan.onclick = function() {
               if (audioPlayer) {
                 audioPlayer.play();
-                // Reset the display to indicate song is playing
-                display.textContent = '🎶:)';
+                display.textContent = '🎶 :)';
               }
             };
             
@@ -94,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
           }
 
-          calculationString = result.toString().replace(/<[^>]+>/g, ''); // Strip HTML for next calculation
+          calculationString = result.toString().replace(/<[^>]+>/g, '');
           currentInput = '';
 
         } catch (error) {
@@ -128,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   document.addEventListener('keydown', (e) => {
-    // Stop audio on key press
     if (audioPlayer) {
       audioPlayer.pause();
       audioPlayer.currentTime = 0;
@@ -176,49 +174,59 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   }
-
-  // quote pop-up
+  
+  // --- Function to fetch and cache quotes ---
   const fetchAndCacheQuotes = () => {
+    // NOTE: We are using the 'quotes' mode to fetch a random quote batch.
     fetch('/api/quotes/quotes')
       .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok: ' + response.status);
+          // If response is not 200, it's likely the rate limit
+          throw new Error('API Rate Limit Hit or Server Down: ' + response.status);
         }
         return response.json();
       })
       .then(data => {
+        // Zen Quotes API returns an array of quotes
         if (Array.isArray(data) && data.length > 0) {
-            quoteCache = data;
+            quoteCache = data; // Cache the quotes
         } else {
             throw new Error('API returned empty or invalid data.');
         }
       })
       .catch(error => {
-        quoteContent.textContent = 'Quote failed. Please wait 30 seconds and try again.';
+        quoteContent.textContent = 'Quote failed';
         console.error('Error fetching quote:', error);
       });
   };
 
+  // --- Quote pop-up functionality ---
   if (cuteButton && quotePopup && closeQuoteButton) {
+      // Fetch initial set of quotes on page load
       fetchAndCacheQuotes(); 
 
       cuteButton.addEventListener('click', () => {
-        historyPopup.style.display = 'none'; 
-        quotePopup.style.display = 'block';
+        historyPopup.style.display = 'none'; // Ensure history is hidden
+        quotePopup.style.display = 'block'; // Show the quote popup
 
         if (quoteCache.length > 0) {
+            // Get a random quote from the cache
             const randomIndex = Math.floor(Math.random() * quoteCache.length);
             const quote = quoteCache[randomIndex].q;
+
+            // Display the quote
             quoteContent.textContent = `“${quote}”`;
 
+            // Remove the used quote from the cache and refill if low
             quoteCache.splice(randomIndex, 1); 
 
-            if (quoteCache.length < 2) {
+            if (quoteCache.length < 5) { // If fewer than 5 quotes left, fetch a new batch
                 fetchAndCacheQuotes();
             }
 
         } else {
-            quoteContent.textContent = 'Quote failed. Please refresh the page or try again in 30 seconds.';
+            // If cache is empty, display error and try to fetch new ones
+            quoteContent.textContent = 'Quote failed. Please wait 30 seconds and try again.';
             fetchAndCacheQuotes(); 
         }
       });

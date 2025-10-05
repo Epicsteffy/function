@@ -11,18 +11,27 @@ document.addEventListener("DOMContentLoaded", function() {
   let quotePopup = document.getElementById('quote-popup');
   let quoteContent = document.getElementById('quote-content');
   let closeQuoteButton = document.getElementById('close-quote');
+  let audioPlayer = document.getElementById('wby-audio');
+  
   let currentInput = '';
   let calculationString = '';
   let ratImage = document.querySelector('.floating-image');
   
   let clickCount = 0;
   let isDarkTheme = false;
+  let quoteCache = []; 
 
   if (ratImage) {
     ratImage.style.display = 'none';
   }
 
   function handleInput(value) {
+    // Clear the audio player if anything else is typed
+    if (audioPlayer) {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+    }
+    
     if (value === 'C') {
       currentInput = '';
       calculationString = '';
@@ -37,20 +46,46 @@ document.addEventListener("DOMContentLoaded", function() {
           let result;
 
           if (calculationString === '10+12+2022') {
-            result = 'The night we met 🎶';
+            
+            // --- NEW: Create a clickable element for the song ---
+            let clickableSpan = document.createElement('span');
+            clickableSpan.textContent = 'The night we met 🎶';
+            clickableSpan.style.cursor = 'pointer';
+            clickableSpan.style.textDecoration = 'underline';
+            clickableSpan.style.color = isDarkTheme ? '#ecf0f1' : '#6b5b95'; // Match current theme
+
+            clickableSpan.onclick = function() {
+              if (audioPlayer) {
+                audioPlayer.play();
+                // Reset the display to indicate song is playing
+                display.textContent = '🎶 Playing...';
+              }
+            };
+            
+            display.innerHTML = '';
+            display.appendChild(clickableSpan);
+            
+            result = clickableSpan.outerHTML; // Store HTML content for history
+            
+            if (ratImage) {
+              ratImage.style.display = 'none';
+            }
+            
           } else if (calculationString === '6+9') {
             result = '15 😏';
             if (ratImage) {
               ratImage.style.display = 'block';
             }
+             display.textContent = result;
           } else {
             result = eval(calculationString);
+            display.textContent = result;
             if (ratImage) {
               ratImage.style.display = 'none';
             }
           }
           
-          if (historyList && (typeof result === 'number' || typeof result === 'string')) {
+          if (historyList) {
             let historyItem = document.createElement('li');
             historyItem.textContent = `${calculationString} = ${result}`;
             historyList.appendChild(historyItem);
@@ -59,8 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
           }
 
-          display.textContent = result;
-          calculationString = result.toString();
+          calculationString = result.toString().replace(/<[^>]+>/g, ''); // Strip HTML for next calculation
           currentInput = '';
 
         } catch (error) {
@@ -94,6 +128,12 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   document.addEventListener('keydown', (e) => {
+    // Stop audio on key press
+    if (audioPlayer) {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+    }
+
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(e.key)) {
       handleInput(e.key);
     } else if (e.key === '.') {
@@ -114,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (historyButton && historyPopup && closeHistoryButton) {
     historyButton.addEventListener('click', () => {
-      quotePopup.style.display = 'none'; // Hide quote popup if it's open
+      quotePopup.style.display = 'none'; 
       historyPopup.style.display = 'block';
     });
     closeHistoryButton.addEventListener('click', () => {
@@ -137,30 +177,50 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
+  // --- Quote pop-up functionality ---
+  const fetchAndCacheQuotes = () => {
+    fetch('/api/quotes/quotes')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok: ' + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+            quoteCache = data;
+        } else {
+            throw new Error('API returned empty or invalid data.');
+        }
+      })
+      .catch(error => {
+        quoteContent.textContent = 'Quote failed. Please wait 30 seconds and try again.';
+        console.error('Error fetching quote:', error);
+      });
+  };
+
   if (cuteButton && quotePopup && closeQuoteButton) {
+      fetchAndCacheQuotes(); 
+
       cuteButton.addEventListener('click', () => {
-        historyPopup.style.display = 'none'; // Hide history popup if it's open
-        quoteContent.textContent = 'Fetching quote...';
+        historyPopup.style.display = 'none'; 
         quotePopup.style.display = 'block';
 
-        // NOTE: Zen Quotes API is restricted to 5 requests per 30 seconds.
-        // We are using the 'quotes' mode to fetch a random quote.
-        fetch('/api/quotes/quotes')
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok: ' + response.status);
-            }
-            return response.json();
-          })
-          .then(data => {
-            // Zen Quotes API returns an array of quotes, even for a single random one.
-            const quote = data[0].q;
+        if (quoteCache.length > 0) {
+            const randomIndex = Math.floor(Math.random() * quoteCache.length);
+            const quote = quoteCache[randomIndex].q;
             quoteContent.textContent = `“${quote}”`;
-          })
-          .catch(error => {
-            quoteContent.textContent = 'Quote failed. Please wait 30 seconds and try again.';
-            console.error('Error fetching quote:', error);
-          });
+
+            quoteCache.splice(randomIndex, 1); 
+
+            if (quoteCache.length < 2) {
+                fetchAndCacheQuotes();
+            }
+
+        } else {
+            quoteContent.textContent = 'Quote failed. Please refresh the page or try again in 30 seconds.';
+            fetchAndCacheQuotes(); 
+        }
       });
 
       closeQuoteButton.addEventListener('click', () => {

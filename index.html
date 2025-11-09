@@ -1,57 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mai Calculator</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Home</title>
+    <link rel="stylesheet" href="css/dashboard-styles.css">
 </head>
 <body>
-  <div class="calculator-container">
-    <img src="rat.png" alt="Cute Rat" class="floating-image">
-    <h1 id="title">Mai Calculator</h1>
-    <div class="display" id="display">0</div>
-    <div class="buttons">
-      <button class="btn number" data-value="7">7</button>
-      <button class="btn number" data-value="8">8</button>
-      <button class="btn number" data-value="9">9</button>
-      <button class="btn operator" data-value="/">÷</button>
-      <button class="btn number" data-value="4">4</button>
-      <button class="btn number" data-value="5">5</button>
-      <button class="btn number" data-value="6">6</button>
-      <button class="btn operator" data-value="*">×</button>
-      <button class="btn number" data-value="1">1</button>
-      <button class="btn number" data-value="2">2</button>
-      <button class="btn number" data-value="3">3</button>
-      <button class="btn operator" data-value="-">−</button>
-      <button class="btn number" data-value="0">0</button>
-      <button class="btn number" data-value=".">.</button>
-      <button class="btn clear" data-value="C">C</button>
-      <button class="btn operator" data-value="+">+</button>
-      <button class="btn equals" data-value="=">=</button>
+    <div class="os-container">
+        <h1 id="greeting-text">Loading...</h1>
+        
+        <div class="app-window">
+            <div class="app-tray">
+                <a href="apps/calculator/index.html" class="app-icon">
+                    <img src="cat.png" alt="Calculator Icon">
+                    <p>Calculator</p>
+                </a>
+                
+                <a href="apps/album/index.html" class="app-icon">
+                    <img src="cats.png" alt="Album Icon">
+                    <p>Album</p>
+                </a>
+
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="bottom-buttons">
-    <a href="feedback.html" class="feedback-button meow-button">Meow</a>
-    <button id="history-button" class="feedback-button">History</button>
-    <button id="cute-button" class="feedback-button cute-button">
-        <img src="cute.png" alt="Cute Toy" class="cute-image">
-    </button>
-  </div>
-  <div id="history-popup" class="history-container">
-      <button id="close-history" class="close-button">&times;</button>
-      <h3>History</h3>
-      <ul id="history"></ul>
-  </div>
-  <div id="quote-popup" class="history-container">
-      <button id="close-quote" class="close-button">&times;</button>
-      <h3>❤️</h3>
-      <p id="quote-content" class="quote-font"></p>
-  </div>
-  
-  <audio id="wby-audio" src="wby.mp3" preload="auto"></audio>
-  
-  <script src="script.js"></script>
+
+    <script src="js/dashboard-script.js"></script>
 </body>
 </html>

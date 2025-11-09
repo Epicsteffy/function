@@ -1,0 +1,69 @@
+body {
+    background: linear-gradient(135deg, #fce0e8, #f5d9e1); /* Soft, lighter pastel background */
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    transition: background 0.5s ease;
+}
+
+.os-container {
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+    background-color: #ffd9e8; /* Soft pink color for the main rectangle */
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    min-height: 500px;
+}
+
+#greeting-text {
+    font-size: 24px;
+    color: #6b5b95; /* Matching your calculator title color */
+    margin-bottom: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    height: 60px; /* Give it space for the two-line greeting */
+}
+
+.app-window {
+    background: #f7f7f7; /* Inner white/light container */
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.app-tray {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for app icons */
+    gap: 20px;
+    padding: 10px;
+}
+
+.app-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+    text-align: center;
+}
+
+.app-icon:hover {
+    transform: scale(1.05);
+}
+
+.app-icon img {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

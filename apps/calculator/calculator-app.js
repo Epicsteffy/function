@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
   let clickCount = 0;
   let isDarkTheme = false;
-  let quoteCache = []; 
+  let quoteCache = []; // NEW: Cache to store quotes and avoid rate limits
 
   if (ratImage) {
     ratImage.style.display = 'none';
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
             clickableSpan.onclick = function() {
               if (audioPlayer) {
                 audioPlayer.play();
-                display.textContent = '🎶 :)';
+                display.textContent = '🎶 Playing...';
               }
             };
             
@@ -177,25 +177,24 @@ document.addEventListener("DOMContentLoaded", function() {
   
   // --- Function to fetch and cache quotes ---
   const fetchAndCacheQuotes = () => {
-    // NOTE: We are using the 'quotes' mode to fetch a random quote batch.
-    fetch('/api/quotes/quotes')
+    // Show fetching message, but don't show the whole popup unless requested
+    console.log('Fetching new quote batch...');
+    fetch('/api/quotes/quotes') 
       .then(response => {
         if (!response.ok) {
-          // If response is not 200, it's likely the rate limit
           throw new Error('API Rate Limit Hit or Server Down: ' + response.status);
         }
         return response.json();
       })
       .then(data => {
-        // Zen Quotes API returns an array of quotes
         if (Array.isArray(data) && data.length > 0) {
             quoteCache = data; // Cache the quotes
+            console.log(`Cache filled with ${data.length} quotes.`);
         } else {
             throw new Error('API returned empty or invalid data.');
         }
       })
       .catch(error => {
-        quoteContent.textContent = 'Quote failed';
         console.error('Error fetching quote:', error);
       });
   };
@@ -227,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             // If cache is empty, display error and try to fetch new ones
             quoteContent.textContent = 'Quote failed. Please wait 30 seconds and try again.';
+            // Try to fetch again, but it might fail due to rate limit
             fetchAndCacheQuotes(); 
         }
       });

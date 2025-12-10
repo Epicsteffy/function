@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
             clickableSpan.onclick = function() {
               if (audioPlayer) {
                 audioPlayer.play();
-                display.textContent = '🎶 Playing...';
+                display.textContent = '🎶...';
               }
             };
             
